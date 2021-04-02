@@ -92,8 +92,7 @@ func Middleware(options Options) gin.HandlerFunc {
 			return
 		}
 
-		token := c.Request.Header.Get("X-User-Token")
-		if len(token) > 0 {
+		if len(c.Request.Header.Get("X-User-Token")) > 0 {
 			c.Next()
 			return
 		}
