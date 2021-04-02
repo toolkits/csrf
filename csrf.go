@@ -92,10 +92,10 @@ func Middleware(options Options) gin.HandlerFunc {
 			return
 		}
 
-		if len(c.Request.Header.Get("X-User-Token")) > 0 {
-			c.Next()
-			return
-		}
+		// if len(c.Request.Header.Get("X-User-Token")) > 0 {
+		// 	c.Next()
+		// 	return
+		// }
 
 		session := sessions.Default(c)
 		c.Set(csrfSecret, options.Secret)
