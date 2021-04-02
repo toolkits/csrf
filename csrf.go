@@ -87,13 +87,19 @@ func Middleware(options Options) gin.HandlerFunc {
 	}
 
 	return func(c *gin.Context) {
-		session := sessions.Default(c)
-		c.Set(csrfSecret, options.Secret)
-
 		if inArray(ignoreMethods, c.Request.Method) {
 			c.Next()
 			return
 		}
+
+		token := c.Request.Header.Get("X-User-Token")
+		if len(token) > 0 {
+			c.Next()
+			return
+		}
+
+		session := sessions.Default(c)
+		c.Set(csrfSecret, options.Secret)
 
 		salt, ok := session.Get(csrfSalt).(string)
 
